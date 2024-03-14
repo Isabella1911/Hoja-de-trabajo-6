@@ -1,79 +1,79 @@
-public class card {
-
-    private String name;
-    private String type;
-    private int amount;
+public class Card {
+    private String nombre;
+    private String tipo;
+    private int cantidad;
 
     /**
-     * Construye una nueva card con el name, type y amount dados.
-     * @param name el name de la card
-     * @param type el type de la card
-     * @param amount la amount de la card
+     * Construye una nueva carta con el nombre, tipo y cantidad 
+     * @param nombre el nombre de la Card
+     * @param tipo el tipo de la Card
+     * @param cantidad la cantidad de la Card
      */
-    public card(String name, String type, int amount) {
-        this.name = name;
-        this.type = type;
-        this.amount = amount;
+    public Card(String nombre, String tipo, int cantidad) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.cantidad = cantidad;
     }
 
     /**
-     * Devuelve el name de esta card.
-     * @return el name
+     * Da el nombre de la carta
+     * @return el nombre
      */
-    public String getname() {
-        return name;
+    public String getName() {
+        return nombre;
     }
 
     /**
-     * Establece el name de esta card.
-     * @param name el nuevo name
+     * define el nombre de la carta
+     * @param nombre el nuevo nombre
      */
-    public void setname(String name) {
-        this.name = name;
+    public void setName(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
-     * Devuelve el type de esta card.
-     * @return el type
+     * Da el tipo de carta
+     * @return el tipo
      */
-    public String gettype() {
-        return type;
+    public String getType() {
+        return tipo;
     }
 
     /**
-     * Establece el type de esta card.
-     * @param type el nuevo type
+     * define el tipo de carta
+     * @param tipo el nuevo tipo
      */
-    public void settype(String type) {
-        this.type = type;
+    public void setType(String tipo) {
+        this.tipo = tipo;
     }
 
     /**
-     * Devuelve la amount de esta card.
-     * @return la amount
+     * Da la cantidad de la carta
+     * @return la cantidad
      */
-    public int getamount() {
-        return amount;
+    public int getQuantity() {
+        return cantidad;
     }
 
     /**
-     * Establece la amount de esta card.
-     * @param amount la nueva amount
+     * defina la cantidad de la carta
+     * @param cantidad la nueva cantidad
      */
-    public void setamount(int amount) {
-        this.amount = amount;
+    public void setQuantity(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     /**
-     * Devuelve una representación en cadena de esta card.
-     * @return una cadena que representa esta card
+     * Da la carta con sus atributos
+     * @return una cadena que representa esta Card
      */
     @Override
     public String toString() {
-        return "La card es{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", amount=" + amount +
-                '}';
+        return "Carta:" +
+                "Nombre:'" + nombre + '\'' +
+                " Tipo:" + tipo + '\'' +
+                " Cantidad:" + cantidad;
     }
 }
+
+
