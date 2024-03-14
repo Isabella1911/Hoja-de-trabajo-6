@@ -19,6 +19,7 @@ public class Interface {
                 System.out.println("\n5. Mostrar todas las Ccartas creadas");
                 System.out.println("\n6. Mostrar todas las cartas ordenadas por tipo");
                 System.out.println("\n7. Salir");
+                System.out.println("\nOpción:");
     
                 try {
                     option = Functions.readDigit();
@@ -56,9 +57,9 @@ public class Interface {
         }
     
         private void addCard(Map<String, String> CardsSistema) {
-            System.out.print("\nnombre de la carta");
+            System.out.print("\nnombre de la carta: ");
             String nombreCard = Functions.readEntry();
-            System.out.println("\ntipo de la Carta");
+            System.out.println("\ntipo de la Carta (Monstruo, Trampa, Hechizo):  ");
             String tipoCard = Functions.readEntry();
     
             if (CardsSistema.containsKey(nombreCard)) {
