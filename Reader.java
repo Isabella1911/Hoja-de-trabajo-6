@@ -4,20 +4,19 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Reader {
-
     public HashMap<String, String> leerArchivo(String fileName){
-        HashMap<String, String> cartas = new HashMap<>();
+        HashMap<String, String> Cards = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String linea;
             while((linea = br.readLine())!= null){
-                String[] carta = linea.split("\\|");
-                cartas.put(carta[0], carta[1]);
+                String[] Card = linea.split("\\|");
+                Cards.put(Card[0], Card[1]);
             }
             
-            System.out.println("Se cargarón las cartas correctamente");
+            System.out.println("Cartas agregadas al deck");
         } catch (IOException e) {
-            System.err.println("Error " + e.getMessage());
+            System.err.println("Error al subir cartas     " + e.getMessage());
         }
-        return cartas;
+        return Cards;
     }
 }
