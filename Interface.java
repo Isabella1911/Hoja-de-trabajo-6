@@ -1,95 +1,133 @@
 import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
+
+
 public class Interface {
-        private Deck Deck;
-    
-        public Interface(Deck Deck) {
-            this.Deck = Deck;
-        }
-    
-        public void mostrarMenu(Map<String, String> CardsSistema) {
-            int option = 0;
-    
-            while (option != 7) {
-                System.out.println("\n1. Agrega una carta");
-                System.out.println("\n2. Mostrar el tipo de una Card específica");
-                System.out.println("\n3. Mostrar todas las cartas");
-                System.out.println("\n4. Mostrar todas las cartas de la colección ordenadas por tipo");
-                System.out.println("\n5. Mostrar todas las Ccartas creadas");
-                System.out.println("\n6. Mostrar todas las cartas ordenadas por tipo");
-                System.out.println("\n7. Salir");
-                System.out.println("\nOpción:");
-    
-                try {
-                    option = Functions.readDigit();
-                } catch (NumberFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-    
-                switch (option) {
-                    case 1:
-                        addCard(CardsSistema);
-                        break;
-                    case 2:
-                        showTypeCard(CardsSistema);
-                        break;
-                    case 3:
-                        Deck.showAllCards();
-                        break;
-                    case 4:
-                        Deck.showCards();
-                        break;
-                    case 5:
-                        showAllCardsAvailable(CardsSistema);
-                        break;
-                    case 6:
-                        showAllCardsAvailableInOrder(CardsSistema);
-                        break;
-                    case 7:
-                        System.out.println("\nPrograma terminado");
-                        // break;
-                        return;// ver si cambiar por break
-                    default:
-                        System.out.println("\nerror, opción no valida\n");
-                }
+    private Deck deck;
+
+    public Interface(Deck deck) {
+        this.deck = deck;
+    }
+
+    public void mostrarMenu(Map<String, String> CardsSistema) {
+        int option = 0;
+        long startTime, endTime, elapsedTime;
+
+        while (option != 7) {
+            System.out.println("\n1. Agregar una carta");
+            System.out.println("2. Mostrar el tipo de una carta específica");
+            System.out.println("3. Mostrar todas las cartas");
+            System.out.println("4. Mostrar todas las cartas de la colección ordenadas por tipo");
+            System.out.println("5. Mostrar todas las cartas creadas");
+            System.out.println("6. Mostrar todas las cartas ordenadas por tipo");
+            System.out.println("7. Salir");
+            System.out.print("\nOpción: ");
+
+            try {
+                option = Functions.readDigit();
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+                continue; // Solicita nuevamente la opción si ocurre una excepción
+            }
+
+            switch (option) {
+                case 1:
+                    startTime = System.nanoTime();
+                    addCard(CardsSistema);
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de addCard(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 2:
+                    startTime = System.nanoTime();
+                    showTypeCard(CardsSistema);
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de showTypeCard(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 3:
+                    startTime = System.nanoTime();
+                    deck.showAllCards();
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de showAllCards(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 4:
+                    startTime = System.nanoTime();
+                    deck.showCards();
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de showCards(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 5:
+                    startTime = System.nanoTime();
+                    showAllCardsAvailable(CardsSistema);
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de showAllCardsAvailable(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 6:
+                    startTime = System.nanoTime();
+                    showAllCardsAvailableInOrder(CardsSistema);
+                    endTime = System.nanoTime();
+                    elapsedTime = endTime - startTime;
+                    System.out.println("Tiempo de ejecución de showAllCardsAvailableInOrder(): " + elapsedTime + " nanosegundos");
+                    break;
+                case 7:
+                    System.out.println("\nPrograma terminado");
+                    return;
+                default:
+                    System.out.println("\nError, opción no válida\n");
             }
         }
+    }
+
+    private void addCard(Map<String, String> CardsSistema) {
+        System.out.print("\nNombre de la carta: ");
+        String nombreCard = Functions.readEntry();
+        System.out.print("Tipo de la carta (Monstruo, Trampa, Hechizo): ");
+        String tipoCard = Functions.readEntry();
     
-        private void addCard(Map<String, String> CardsSistema) {
-            System.out.print("\nnombre de la carta: ");
-            String nombreCard = Functions.readEntry();
-            System.out.println("\ntipo de la Carta (Monstruo, Trampa, Hechizo):  ");
-            String tipoCard = Functions.readEntry();
+        Card card = new Card(nombreCard, tipoCard, 1);
+        deck.addCard(card);
+        System.out.println("\nCarta agregada");
     
-            if (CardsSistema.containsKey(nombreCard)) {
-                Card Card = new Card(nombreCard, tipoCard, 1);
-                Deck.addCard(Card);
-                System.out.println("\n\ncarta agregada");
-            } else {
-                System.out.println("\nLa carta " + nombreCard + " no se esta en el sistema.");
-            }
+        // Agregar la nueva carta al archivo
+        try (PrintWriter writer = new PrintWriter(new FileWriter("cards_desc.txt", true))) {
+            writer.println(nombreCard + "|" + tipoCard);
+            System.out.println("Carta guardada en el archivo");
+        } catch (IOException e) {
+            System.err.println("Error al guardar la carta en el archivo: " + e.getMessage());
         }
     
-        private void showTypeCard(Map<String, String> CardsSistema) {
-            System.out.print("\nIngrese el nombre de la carta: ");
-            String nombreCard = Functions.readEntry();
-           
-            if (CardsSistema.containsKey(nombreCard)) {
-                System.out.println("\nLa carta '" + nombreCard + "' es de tipo: " + CardsSistema.get(nombreCard));
-            } else {
-                System.out.println("\nLa carta '" + nombreCard + "' no se pudo encuentrar");
-            }
-        }
+        // Actualizar el mapa CardsSistema con la nueva carta
+        CardsSistema.put(nombreCard, tipoCard);
+    }
     
-        private void showAllCardsAvailable(Map<String, String> CardsSistema) {
-            for (Map.Entry<String, String> entry : CardsSistema.entrySet()) {
-                System.out.println("\nNombre: " + entry.getKey() + " Tipo: " + entry.getValue());
-            }
+    
+
+    private void showTypeCard(Map<String, String> CardsSistema) {
+        System.out.print("\nIngrese el nombre de la carta: ");
+        String nombreCard = Functions.readEntry();
+
+        if (CardsSistema.containsKey(nombreCard)) {
+            System.out.println("\nLa carta '" + nombreCard + "' es de tipo: " + CardsSistema.get(nombreCard));
+        } else {
+            System.out.println("\nLa carta '" + nombreCard + "' no se pudo encontrar");
         }
+    }
+
+    private void showAllCardsAvailable(Map<String, String> CardsSistema) {
+        for (Map.Entry<String, String> entry : CardsSistema.entrySet()) {
+            System.out.println("\nNombre: " + entry.getKey() + " Tipo: " + entry.getValue());
+        }
+    }
     
         private void showAllCardsAvailableInOrder(Map<String, String> CardsSistema) {
-            // ...
 
             Map<String, Integer> CardsPorTipo = new HashMap<>();
             for (Map.Entry<String, String> entry : CardsSistema.entrySet()) {;
