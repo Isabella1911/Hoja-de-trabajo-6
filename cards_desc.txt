@@ -3,3 +3,4 @@ uu|Trampa
 uu|Trampa
 uu|trampa
 oo|Hechizo
+oo|Hechizo
